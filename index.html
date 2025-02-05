@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Gift</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6ea;
+           
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: #ff3366;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border: 3px solid pink;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .image-container {
+            margin-right: 20px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 10px;
+            border: 3px solid pink;
+        }
+
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .code-display {
+            font-size: 24px;
+            font-weight: bold;
+            background: white;
+            padding: 10px;
+            width: 180px;
+            text-align: center;
+            border: 2px solid pink;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            letter-spacing: 5px;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 250px;
+            margin: auto;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 18px;
+            background-color: pink;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ff99b3;
+        }
+
+        .submit-btn {
+            margin-top: 10px;
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .input-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .image-container {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .keypad {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Happy Valentine's Day</h2>
+    <p>ไอเดียของขวัญให้แฟนวันวาเลนไทน์นี้ ❤️</p>
+
+    <div class="container">
+        <div class="input-container">
+            <div class="image-container">
+                <img src="img/S__21782534_0.jpg" alt="คู่รัก" id="secretImage">
+            </div>
+            
+            <div class="code-section">
+                <div class="code-display">
+                    <span id="codeDisplay">******</span>
+                </div>
+        
+                <div class="keypad">
+                    <button onclick="enterCode('1')">1</button>
+                    <button onclick="enterCode('2')">2</button>
+                    <button onclick="enterCode('3')">3</button>
+                    <button onclick="enterCode('4')">4</button>
+                    <button onclick="enterCode('5')">5</button>
+                    <button onclick="enterCode('6')">6</button>
+                    <button onclick="enterCode('7')">7</button>
+                    <button onclick="enterCode('8')">8</button>
+                    <button onclick="enterCode('9')">9</button>
+                    <button onclick="enterCode('*')">*</button>
+                    <button onclick="enterCode('0')">0</button>
+                    <button onclick="clearCode()">#</button>
+                </div>
+        
+                <button class="submit-btn" onclick="checkCode()">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let code = "";
+
+        function enterCode(num) {
+            if (code.length < 6) {
+                code += num;
+                document.getElementById("codeDisplay").innerText = code.padEnd(6, '*');
+            }
+        }
+
+        function clearCode() {
+            code = "";
+            document.getElementById("codeDisplay").innerText = "******";
+        }
+
+        function checkCode() {
+            if (code === "130967") {
+                window.location.href = "time.html";
+            } else {
+                alert("รหัสผิด ลองใหม่!");
+                clearCode();
+            }
+        }
+    </script>
+</body>
+</html>

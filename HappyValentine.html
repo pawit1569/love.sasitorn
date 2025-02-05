@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fbeeff;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            opacity: 0;
+            animation: fadeIn 2s forwards; /* เพิ่มเอฟเฟกต์ fade-in สำหรับ container */
+        }
+        /* Animation สำหรับ fade-in */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .btn {
+            background: #b37feb;
+            color: white;
+            font-size: 18px;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeIn 2s 1s forwards; /* ปุ่มจะปรากฏค่อยๆ หลังจาก container */
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 2s 1.5s forwards; /* กริดรูปภาพจะปรากฏทีหลัง */
+        }
+
+        .grid img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover; /* ทำให้รูปภาพเติมเต็มพื้นที่และรักษาสัดส่วน */
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .upload {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 2s 2s forwards; /* ส่วน upload จะปรากฏค่อยๆ หลังสุด */
+        }
+        .upload input {
+            display: none;
+        }
+        .upload label {
+            background: #e0c3fc;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .footer {
+            background: #b37feb;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 2s 2.5s forwards; /* Footer ค่อยๆ ปรากฏหลังจากการอัปโหลด */
+        }
+        /* เพิ่ม margin-bottom ให้ปุ่ม "เปลี่ยนหน้า" */
+        .next-page-btn {
+            margin-top: 20px;
+            margin-bottom: 0;
+            opacity: 0;
+            animation: fadeIn 2s 3s forwards; /* ปุ่มเปลี่ยนหน้าค่อยๆ ปรากฏ */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>💜 Happy Valentine 💜</h2>
+        <button class="btn">Happy Valentines</button>
+
+        <div class="upload">
+            <span>You 💜 Me</span>
+            <input type="file" id="upload-photo" accept="image/*" multiple>
+        </div>
+
+        <div class="grid" id="photo-grid">
+            <!-- รูปที่อัปโหลดจะแสดงตรงนี้ -->
+            <img src="img/1.jpg" alt="">
+            <img src="img/2.jpg" alt="">
+            <img src="img/3.jpg" alt="">
+            <img src="img/4.jpg" alt="">
+            <img src="img/S__21782534_0.jpg" alt="">
+            <img src="img/6.jpg" alt="">
+        </div>
+
+        <!-- ปุ่มเปลี่ยนหน้า -->
+        <button class="btn next-page-btn" onclick="window.location.href = 'chat.html';">➡️ ไปยังหน้าถัดไป</button>
+
+        <div class="footer">I love you so much ❤️</div>
+    </div>
+
+    <script>
+        document.getElementById('upload-photo').addEventListener('change', function(event) {
+            const grid = document.getElementById('photo-grid');
+            grid.innerHTML = ''; // ล้างข้อมูลเดิม
+            const files = event.target.files;
+            for (let i = 0; i < Math.min(files.length, 9); i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    grid.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+</body>
+</html>

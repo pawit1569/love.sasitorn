@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ดาวน์โหลดก่อนเปลี่ยนหน้า (ธีมวาเลนไทน์)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fbe6e6;
+    }
+
+    #loading-container {
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    #progress-bar-container {
+      width: 100%;
+      background-color: #ffcccc;
+      height: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 20px;
+      border: 2px solid #ff6666;
+    }
+
+    #progress-bar {
+      width: 0;
+      height: 100%;
+      background-color: #e74c3c;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+      font-weight: bold;
+      border-radius: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #d63031;
+    }
+
+    .heart {
+      color: #e74c3c;
+      font-size: 50px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-container">
+    <p>กำลังโหลด... โปรดรอ</p>
+    <!-- หัวใจที่เต้นเป็นจังหวะ -->
+    <div class="heart">❤️</div>
+    
+    <!-- Progress bar -->
+    <div id="progress-bar-container">
+      <div id="progress-bar">0%</div>
+    </div>
+  </div>
+
+  <script>
+    // ตัวแปรสำหรับการคำนวณการโหลด
+    let progress = 0;
+    const progressBar = document.getElementById('progress-bar');
+    
+    // จำลองการโหลดข้อมูล
+    const loadingInterval = setInterval(function() {
+      progress += 1;
+      progressBar.style.width = progress + '%';
+      progressBar.textContent = progress + '%';
+
+      // เมื่อโหลดเสร็จ (เต็ม 100%)
+      if (progress >= 100) {
+        clearInterval(loadingInterval);
+        
+        // เปลี่ยนหน้าไปยังไฟล์ HTML อื่น
+        setTimeout(function() {
+          window.location.href = "HappyValentine.html"; // เปลี่ยนไปยังไฟล์ HTML อื่น
+        }, 500); // รอให้การโหลดเสร็จสิ้นก่อนเปลี่ยนหน้า
+      }
+    }, 30); // ทุกๆ 30 มิลลิวินาที (สามารถปรับความเร็วการโหลดได้)
+
+  </script>
+
+</body>
+</html>

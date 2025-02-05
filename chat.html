@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แชทบอทสีชมพู</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6f2;
+            margin: 0;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 4px solid #ff99cc;
+        }
+        .chat-header {
+            background: #ff66b2;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #fff0f5;
+        }
+        .chat-message {
+            padding: 12px;
+            max-width: 70%;
+            border-radius: 15px;
+            font-size: 16px;
+            word-wrap: break-word;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+            display: flex;
+            align-items: center;
+        }
+        .chat-message .profile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .chat-message .text {
+            word-wrap: break-word;
+        }
+        .bot {
+            background: #ffb3d9;
+            align-self: flex-start;
+        }
+        .user {
+            background: #ff66b2;
+            color: white;
+            align-self: flex-end;
+        }
+        .user .profile {
+            border: 2px solid white;
+        }
+        .chat-input-container {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #ff66b2;
+        }
+        .chat-input-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+        }
+        .chat-input-container button {
+            background-color: #fff;
+            color: #ff66b2;
+            padding: 10px;
+            margin-left: 10px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">💬 ควารักเราสอง</div>
+        <div class="chat-box" id="chatBox"></div>
+        <div class="chat-input-container">
+            <input type="text" id="userInput" placeholder="พิมพ์ข้อความ..." />
+            <button onclick="sendMessage()">📝</button>
+        </div>
+    </div>
+
+    <script>
+        let messages = [
+            { sender: "bot", text: "สวัสดีค่ะ ต้นอ้อ 💖" },
+            { sender: "user", text: "สวัสดีค่ะ " },
+            { sender: "bot", text: "เธอรู้ไหม การที่เรามีเธอในทุกๆวันเราดีใจมากเลยนะ 😊" },
+            { sender: "user", text: "จริงหรอคะ" },
+            { sender: "bot", text: "จริงสิคะ เค้าอยากจะบอกเธอว่าเค้าอยากตื่นขึ้นมาเจอหน้าเธอในทุกๆ วันเลย" },
+            { sender: "user", text: "ให้มันจริง เถอะ" },
+            { sender: "bot", text: "ค้าบ เค้ารักเธอนะคะ" },
+            { sender: "user", text: "เค้าก็รักเธอเหมือนกัน" },
+            { sender: "bot", text: "เค้าอยากจะบอกเธอว่าเธอไม่ต้องกังวนนะคะเค้าจะคอยอยู่ข้างๆเธอเสมอ 💖" },
+            { sender: "user", text: "......." },
+            { sender: "bot", text: "คืออะไรอ่ะ" },
+            { sender: "user", text: "ไม่มีอะไรค่ะ เธอพูดจริงรึป่าว" },
+            { sender: "bot", text: "จริงค่ะแฟน" },
+            { sender: "user", text: "เค้าอยากจะบอกเธอว่าเธอไม่ต้องกังวนอะไรทั้งนั้นนะคะ เค้ารักเธอค่ะ" },
+            { sender: "bot", text: "เค้าก็รักเธอค่ะ รักมากๆ รักที่สุด" },
+            { sender: "user", text: "ค้าบรักเธอนะคะ แฟน" },
+            { sender: "bot", text: "เค้าภูมิใจในตัวเธอนะคะ จำไว้ว่าทุกก้าวที่เธอเดินไป คือการเดินไปสู่ความสำเร็จ ✨" },
+            { sender: "user", text: "อยากได้แรงบันดาลใจอีกนิดค่ะ" },
+            { sender: "bot", text: "มุ่งมั่นทำในสิ่งที่รัก ความสำเร็จจะตามมาค่ะ ความสุขไม่ได้ขึ้นอยู่กับสิ่งที่เราได้ แต่เป็นการทำในสิ่งที่เรารัก" },
+            { sender: "user", text: "ขอบคุณมากค่ะ! จะพยายามทำในสิ่งที่รัก" },
+            { sender: "bot", text: "เค้ามีเซอร์ไพร์ให้เธอด้วย 💖" },
+            { sender: "user", text: "คืออะไรหรอคะ" },
+            { sender: "bot", text: "123456 เริ่ม" }
+        ];
+
+        let chatBox = document.getElementById("chatBox");
+        let userInput = document.getElementById("userInput");
+        let messageIndex = 0;
+
+        function displayNextMessage() {
+            if (messageIndex < messages.length) {
+                let msg = messages[messageIndex];
+
+                let messageDiv = document.createElement("div");
+                messageDiv.classList.add("chat-message", msg.sender);
+
+                let profilePic = document.createElement("img");
+                profilePic.classList.add("profile");
+                profilePic.src = msg.sender === "bot" ? "https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/362655085_861499328700109_8326255441172460470_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Xbptc5JD1tIQ7kNvgEQVrJe&_nc_oc=AdjB05MT04aqtUq_Rnjlh3hHQ_kLie3NLYsagrFUSggf_xAk7x6slrJe-qTi-LpQHF8qZV0tuV_Wvr4INLl9NxaY&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=Abn8LES93ta5WQnygcSKCdH&oh=00_AYAPuKyrEZCpWRA4at8L2S_tlrITG3N2nE7vKNxzI4guHQ&oe=67A93D11" : "https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/439929516_405066645775111_3548554185503295643_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=d-MjG7Dd-8EQ7kNvgEIuMMb&_nc_oc=AdgdpXHILi5inY0ZhIzICD-bu4ZtiZOW-RYtAHa7mwbxl3h6aaYI2aKfoBT-hz6_7wsOp_zcWplVIpPxsN9MZs-m&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=A8QOY0eqCtmUKWPsQqL4nUN&oh=00_AYAVoaN0Uv-UmqXVxh1bIyhRAXGdPKSo3Dv9qRtQ4wWpYA&oe=67A924CF";
+
+                let textDiv = document.createElement("div");
+                textDiv.classList.add("text");
+                textDiv.innerText = msg.text;
+
+                messageDiv.appendChild(profilePic);
+                messageDiv.appendChild(textDiv);
+                chatBox.appendChild(messageDiv);
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+                messageIndex++;
+
+                setTimeout(displayNextMessage, 1500);
+            } else {
+                // When the chat ends, navigate to another page
+                setTimeout(() => {
+                    window.location.href = "hero.html"; // เปลี่ยนหน้าไปยัง nextpage.html
+                }, 2000);
+            }
+        }
+
+        function sendMessage() {
+            let userMessage = userInput.value.trim();
+            if (userMessage) {
+                let messageDiv = document.createElement("div");
+                messageDiv.classList.add("chat-message", "user");
+
+                let profilePic = document.createElement("img");
+                profilePic.classList.add("profile");
+                profilePic.src = "https://www.facebook.com/photo/?fbid=861499332033442&set=a.112027630313953";  // ใส่ URL รูปโปรไฟล์ของผู้ใช้
+
+                let textDiv = document.createElement("div");
+                textDiv.classList.add("text");
+                textDiv.innerText = userMessage;
+
+                messageDiv.appendChild(profilePic);
+                messageDiv.appendChild(textDiv);
+                chatBox.appendChild(messageDiv);
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+                userInput.value = ""; // Clear input field
+
+                // Simulate bot response after 1.5 seconds
+                setTimeout(() => {
+                    messages.push({ sender: "bot", text: "บอทตอบ: " + userMessage });
+                    displayNextMessage();
+                }, 4000);
+            }
+        }
+
+        setTimeout(displayNextMessage, 4000);
+    </script>
+
+</body>
+</html>

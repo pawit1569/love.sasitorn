@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิดีโอวาเลนไทน์</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgb(245, 194, 228);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 36px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            height: 360px;
+            border-radius: 10px;
+        }
+
+        .heart {
+            font-size: 100px;
+            color: #e74c3c;
+            animation: heart-pulse 1.5s infinite;
+        }
+
+        @keyframes heart-pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        .btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .heart {
+                font-size: 80px;
+            }
+
+            .message {
+                font-size: 20px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            video {
+                height: 250px;
+            }
+
+            .heart {
+                font-size: 60px;
+            }
+
+            .message {
+                font-size: 18px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Happy Valentine's Day!</h1>
+
+    <!-- แสดงหัวใจที่เต้น -->
+    <div class="heart">❤️</div>
+
+    <!-- แสดงไฟล์วิดีโอ -->
+    <div class="video-container">
+        <!-- ใช้ไฟล์ .mp4 หรือ .webm ที่คุณมี -->
+        <video controls autoplay>
+            <source src="img/760455802.585287 (online-video-cutter.com).mp4" type="video/mp4">
+            <source src="img/760455802.585287 (online-video-cutter.com).mp4" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- ข้อความหวานๆ -->
+    <div class="message">
+       LOVE ที่แปลว่ารัก 💖
+    </div>
+
+    <!-- ปุ่มเปลี่ยนหน้า -->
+    <button class="btn" onclick="window.location.href='keyboard.html'">ไปยังหน้าถัดไป</button>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>สร้างโดย <a href="#">PAWIT RAKJANG</a></p>
+    </div>
+
+</body>
+</html>
